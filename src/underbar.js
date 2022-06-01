@@ -42,9 +42,9 @@
       return array.pop();
     } else if( n === 0 ) {
       return [];
+    } else if(n > array.length) {
+      return array;
     }
-
-
 
     var result = [];
 
@@ -62,6 +62,17 @@
   // Note: _.each does not have a return value, but rather simply runs the
   // iterator function over each item in the input collection.
   _.each = function(collection, iterator) {
+
+    if(Array.isArray(collection)) {
+      for ( var x = 0; x < collection.length; x++ ) {
+        iterator(collection[x], x, collection);
+      }
+    } else {
+      for ( var key in collection ) {
+        iterator(collection[key], key, collection);
+      }
+    }
+
   };
 
   // Returns the index at which value can be found in the array, or -1 if value

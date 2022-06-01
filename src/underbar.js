@@ -304,7 +304,7 @@
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
 
-    console.log(arguments[0], arguments[1]);
+    //console.log(arguments[0], arguments[1]);
 
     var obj1 = arguments[0];
 
@@ -320,7 +320,7 @@
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
-    console.log(arguments[0], arguments[1]);
+    //console.log(arguments[0], arguments[1]);
 
     var obj1 = arguments[0];
 
@@ -376,6 +376,32 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    // console.log('memoize: ', func.apply(this.arguments));
+
+    var cache = {};
+
+    return function() {
+
+      var argArray = Array.from(arguments);
+      var stringArgs = JSON.stringify(argArray);
+
+      console.log(cache);
+
+      if (cache[stringArgs]) {
+        console.log(cache);
+        return cache[stringArgs];
+      } else {
+        var result = func.apply(this, arguments)
+        cache[stringArgs] = result;
+        return result;
+      }
+
+    }
+
+    // check the cache for the arguments & its answer
+      // if the arguments & answer exist as a property
+        // return the property from the cache
+      // invoke the function and save the arguments and answer to the cache
   };
 
   // Delays a function for the given number of milliseconds, and then calls
